@@ -15,6 +15,7 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'active_fedora/noid/rspec'
 require 'webmock/rspec'
+require 'i18n/debug' unless ENV['TRAVIS']
 
 RSpec.configure do |config|
   include ActiveFedora::Noid::RSpec

@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'i18n/debug' if ENV['I18N_DEBUG']
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -11,7 +12,7 @@ module Hyku
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-    
+
 
     # The compile method (default in tinymce-rails 4.5.2) doesn't work when also
     # using tinymce-rails-imageupload, so revert to the :copy method
