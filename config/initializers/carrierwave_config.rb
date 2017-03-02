@@ -7,10 +7,13 @@ if Settings.s3.upload_bucket
       provider: 'AWS',
       use_iam_profile: true
     }
+    config.storage = :aws
+    config.aws_bucket = Settings.s3.upload_bucket
+    config.aws_acl = false
     # This must come after fog_credentials due to
     # https://github.com/carrierwaveuploader/carrierwave/pull/1201/files
-    config.storage = :fog
-    config.fog_directory = Settings.s3.upload_bucket
-    config.fog_public = false
+    # config.storage = :fog
+    # config.fog_directory = Settings.s3.upload_bucket
+    # config.fog_public = false
   end
 end
