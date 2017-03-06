@@ -30,8 +30,8 @@ RSpec.describe Hyku::MenuPresenter do
       let(:controller) { Hyrax::UsersController.new }
       it { is_expected.to be true }
     end
-    context "for the Admin::UsersController" do
-      let(:controller) { Admin::UsersController.new }
+    context "for the Hyrax::Admin::UsersController" do
+      let(:controller) { Hyrax::Admin::UsersController.new }
       it { is_expected.to be false }
     end
   end
@@ -46,8 +46,8 @@ RSpec.describe Hyku::MenuPresenter do
       let(:controller) { ContentBlocksController.new }
       it { is_expected.to be true }
     end
-    context "for the Admin::UsersController" do
-      let(:controller) { Admin::UsersController.new }
+    context "for the Hyrax::Admin::UsersController" do
+      let(:controller) { Hyrax::Admin::UsersController.new }
       it { is_expected.to be false }
     end
   end
@@ -73,11 +73,14 @@ RSpec.describe Hyku::MenuPresenter do
     subject { instance.roles_and_permissions_section? }
     context "for the Hyrax::UsersController" do
       let(:controller) { Hyrax::UsersController.new }
-
       it { is_expected.to be false }
     end
-    context "for the Admin::UsersController" do
-      let(:controller) { Admin::UsersController.new }
+    context "for the Hyrax::Admin::UsersController" do
+      let(:controller) { Hyrax::Admin::UsersController.new }
+      it { is_expected.to be true }
+    end
+    context "for the Admin::GroupsController" do
+      let(:controller) { Admin::GroupsController.new }
       it { is_expected.to be true }
     end
   end
