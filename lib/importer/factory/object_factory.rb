@@ -134,7 +134,11 @@ module Importer
         end
 
         def file_paths
-          files.map { |file_name| File.join(files_directory, file_name) }
+          # files.map { |file_name| File.join(files_directory, file_name) }
+          # JA
+          # Need to pass the file rather than the filename, otherwise FileActor can't deal with it
+          # Doesn't seem ideal to be passing around files in memory, so ideally, look for a different way of doing this
+          files.map { |file_name| File.open(File.join(files_directory, file_name),'r') }
         end
 
         # Regardless of what the MODS Parser gives us, these are the properties

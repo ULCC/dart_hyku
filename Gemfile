@@ -1,5 +1,9 @@
 source 'https://rubygems.org'
 
+# dart_hyku
+gem 'dog_biscuits', :git => 'https://github.com/geekscruff/dog_biscuits.git', :branch => 'kfpub'
+gem 'dotenv-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.2'
 # Use sqlite3 as the database for Active Record

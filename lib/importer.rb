@@ -5,5 +5,6 @@ module Importer
   autoload :CSVParser
   autoload :ModsImporter
   autoload :ModsParser
+  autoload :Eprints
   autoload :Factory
 end

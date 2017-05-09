@@ -1,0 +1,8 @@
+en:
+  hyrax:
+    icons:
+      published_item:     'fa fa-file-text-o'
+    select_type:
+      published_item:
+        name:               "Published Item"
+        description:        "Published item works"
