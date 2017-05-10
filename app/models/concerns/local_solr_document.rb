@@ -90,6 +90,10 @@ module LocalSolrDocument
         self[Solrizer.solr_name('official_url')]
       end
 
+      def origin_date
+        self[Solrizer.solr_name('origin_date')]
+      end
+
       def pagination
         self[Solrizer.solr_name('pagination')]
       end
@@ -100,6 +104,14 @@ module LocalSolrDocument
 
       def place_of_publication
         self[Solrizer.solr_name('place_of_publication')]
+      end
+
+      def presented_at
+        self[Solrizer.solr_name('presented_at')]
+      end
+
+      def proceeding
+        self[Solrizer.solr_name('proceeding')]
       end
 
       def project

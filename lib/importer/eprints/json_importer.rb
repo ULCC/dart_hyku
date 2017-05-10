@@ -27,7 +27,8 @@ module Importer
             attributes.delete(:other_files)
             @model = attributes[:model]
             attributes.delete(:model)
-            #create_fedora_objects(attributes)
+            #puts attributes
+            create_fedora_objects(attributes)
             update_with_other_files(attributes[:id], other_files)
             count += 1
           end
@@ -67,20 +68,24 @@ module Importer
         puts 'Updating with other files ... '
         main = ActiveFedora::Base.find(id)
         main.members.each do |fileset|
-          unless other_files[fileset.title[0]].blank?
-            other_files[fileset.title[0]].each do | file_to_add |
-              begin
-                # add -XX:+UseG1GC to Java options to avoid 500 errors
-                path = File.join(@directory, file_to_add[:filename])
-                IngestFileJob.send(:perform_now, fileset, path, Hyrax.config.batch_user_key, {relation: file_to_add[:type], update_existing: true, versioning: false})
-              rescue
-                Rails.logger.error "Failed to add #{file_to_add[:filename]}: #{$ERROR_INFO}"
-              end
+          other_files[fileset.title[0]].each do |file_to_add|
+            begin
+              # add -XX:+UseG1GC to Java options to avoid 500 errors
+              # still not working for txt extracted_text but hopefully it's a fedora config issue; odd though
+              path = File.join(@directory, file_to_add[:filename])
+
+              IngestFileJob.send(:perform_now,
+                                 fileset, path,
+                                 Hyrax.config.batch_user_key,
+                                 {relation: file_to_add[:type],
+                                  update_existing: true,
+                                  versioning: false})
+            rescue
+              Rails.logger.error "Failed to add #{file_to_add[:filename]}: #{$ERROR_INFO}"
             end
           end
         end
       end
-
     end
   end
 end

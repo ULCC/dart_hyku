@@ -60,9 +60,9 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("publisher", :facetable), label: "Publisher", limit: 5
     config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
 
-    # Published Item
-    # config.add_facet_field solr_name("date", :facetable), label: "Date", limit: 5
-    # config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
+    # Published Work / Book
+    config.add_facet_field solr_name("date", :facetable), label: "Date", limit: 5
+    config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -88,9 +88,9 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("format", :stored_searchable), label: "File Format"
     config.add_index_field solr_name("identifier", :stored_searchable), label: "Identifier"
 
-    # Published Item
-    # config.add_index_field solr_name("editor", :stored_searchable), label: "Editor", itemprop: 'editor'
-    # config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword", itemprop: 'about'
+    # Published Work / Book
+    config.add_index_field solr_name("editor", :stored_searchable), label: "Editor", itemprop: 'editor'
+    config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword", itemprop: 'about'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -111,7 +111,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("format", :stored_searchable), label: "File Format"
     config.add_show_field solr_name("identifier", :stored_searchable), label: "Identifier"
 
-    # Published Item
+    # Published Work / Book
     config.add_show_field solr_name("isbn", :stored_searchable), label: "ISBN"
     config.add_show_field solr_name("editor", :stored_searchable), label: "Editor"
     config.add_show_field solr_name("volume_number", :stored_searchable), label: "Volume"
@@ -129,6 +129,11 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("edition", :stored_searchable), label: "Edition"
     config.add_show_field solr_name("series", :stored_searchable), label: "Series"
     config.add_show_field solr_name("place_of_publication", :stored_searchable), label: "Place of Publication"
+
+    # Conference Item
+    config.add_show_field solr_name("origin_date", :stored_searchable), label: "Date Presented"
+    config.add_show_field solr_name("proceeding", :stored_searchable), label: "Proceedings"
+    config.add_show_field solr_name("presented_at", :stored_searchable), label: "Presented At"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
