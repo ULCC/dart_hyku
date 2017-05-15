@@ -6,5 +6,6 @@ module Importer
     autoload :JsonParser
     autoload :JsonDownloader
     autoload :JsonMapper
+    autoload :JsonFilesProcessor
   end
 end

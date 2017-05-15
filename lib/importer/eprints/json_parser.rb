@@ -55,9 +55,9 @@ module Importer
         # @param [Hash] attributes hash
         # @return [Hash] attributes
         def special_attributes(eprint, attributes)
-          if !eprint['event_title'].blank? and !eprint['event_type'].blank?
+          if eprint['event_title'].present? && eprint['event_type'].present?
             attributes.merge!(event_title(eprint['event_title'], eprint['event_type']))
-          elsif !eprint['event_title'].blank? and eprint['event_type'].blank?
+          elsif eprint['event_title'].present? && eprint['event_type'].blank?
             attributes.merge!(event_title(eprint['event_title']))
           end
           attributes.merge!(date(eprint['date'], eprint['date_type']))

@@ -7,7 +7,7 @@ module Importer
         @files_directory = files_directory
         @metadata_file = metadata_file
         @dryrun = dryrun
-        @files = []
+        @files = [] # we do files as a separate step, so send an empty array
       end
 
       def import_all
@@ -22,14 +22,16 @@ module Importer
           parser.each do |attributes|
             @directory = attributes[:file_path]
             attributes.delete(:file_path)
-            @files = attributes[:files] if attributes[:files].present?
-            other_files = attributes[:other_files] if attributes[:other_files].present?
-            attributes.delete(:other_files)
+            filesets = attributes[:files_hash]
+            @files = attributes[:files]
+            attributes.delete(:files_hash)
+            # other_files = attributes[:other_files] if attributes[:other_files].present?
+            # attributes.delete(:other_files)
             @model = attributes[:model]
             attributes.delete(:model)
-            #puts attributes
+            attributes[:edit_groups] = ['admin']
             create_fedora_objects(attributes)
-            update_with_other_files(attributes[:id], other_files)
+            add_filesets_to_work(attributes[:id], filesets)
             count += 1
           end
         end
@@ -38,54 +40,35 @@ module Importer
 
       private
 
-      # Create a parser object with the metadata file and files directory
-      def parser
-        Eprints::JsonParser.new(@metadata_file, @files_directory)
-      end
-
-      # Create an analyser file with the metadata file and files directory
-      def analyser
-        []
-        # EP3JsonAnalyser.new(@metadata_file, @files_directory)
-      end
-
-      # Build a factory to create the objects in fedora.
-      #
-      # @param [Hash] the object attributes
-      def create_fedora_objects(attributes)
-        puts 'Creating Fedora objects ... '
-        @files ||= attributes[:files]
-        @directory = @files_directory if @directory.blank?
-        attributes.delete(:files)
-        Factory.for(@model).new(attributes, @directory, @files).run
-      end
-
-      # Update the new Fedora object with the extracted text and thumbnail from eprints
-      #
-      # @param [String] the new object id
-      # @param [Hash] the filenames of the files to use for the update
-      def update_with_other_files(id, other_files)
-        puts 'Updating with other files ... '
-        main = ActiveFedora::Base.find(id)
-        main.members.each do |fileset|
-          other_files[fileset.title[0]].each do |file_to_add|
-            begin
-              # add -XX:+UseG1GC to Java options to avoid 500 errors
-              # still not working for txt extracted_text but hopefully it's a fedora config issue; odd though
-              path = File.join(@directory, file_to_add[:filename])
-
-              IngestFileJob.send(:perform_now,
-                                 fileset, path,
-                                 Hyrax.config.batch_user_key,
-                                 {relation: file_to_add[:type],
-                                  update_existing: true,
-                                  versioning: false})
-            rescue
-              Rails.logger.error "Failed to add #{file_to_add[:filename]}: #{$ERROR_INFO}"
-            end
-          end
+        # Create a parser object with the metadata file and files directory
+        def parser
+          Eprints::JsonParser.new(@metadata_file, @files_directory)
         end
-      end
+
+        # Create an analyser file with the metadata file and files directory
+        def analyser
+          []
+          # EP3JsonAnalyser.new(@metadata_file, @files_directory)
+        end
+
+        # Build a factory to create the objects in fedora.
+        #
+        # @param attributes [Hash] the object attributes
+        def create_fedora_objects(attributes)
+          puts 'Creating Fedora objects ... '
+          attributes.delete(:files)
+          Factory.for(@model).new(attributes, @directory, @files).run
+        end
+
+        # Add filesets to the work
+        #
+        # @param id [String] id of the work
+        # @param files_hash [Hash] info re files to add to work
+        def add_filesets_to_work(id, files_hash)
+          puts 'Adding filesets ... '
+          work = ActiveFedora::Base.find(id)
+          Eprints::JsonFilesProcessor.new(work, files_hash, @directory)
+        end
     end
   end
 end

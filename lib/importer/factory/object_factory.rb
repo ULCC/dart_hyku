@@ -137,7 +137,7 @@ module Importer
           # files.map { |file_name| File.join(files_directory, file_name) }
           # JA
           # Need to pass the file rather than the filename, otherwise FileActor can't deal with it
-          # Doesn't seem ideal to be passing around files in memory, so ideally, look for a different way of doing this
+          # Doesn't seem ideal to be passing around files in memory
           files.map { |file_name| File.open(File.join(files_directory, file_name),'r') }
         end
 
