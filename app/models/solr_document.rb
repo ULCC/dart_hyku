@@ -5,13 +5,8 @@ class SolrDocument
 
   # Adds Hyrax behaviors to the SolrDocument.
   include Hyrax::SolrDocumentBehavior
-<<<<<<< HEAD
-  # Adds Hyrax behaviors to the SolrDocument.
-  include Hyrax::SolrDocumentBehavior
   # Adds Properies from Dog Biscuits
   include LocalSolrDocument
-=======
->>>>>>> 14c391ef3705865bd24f76ad6338eb82c87774cf
 
   # self.unique_key = 'id'
 

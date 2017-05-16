@@ -4,34 +4,25 @@ module Importer
     class JsonImporter
       def initialize(metadata_file, files_directory, dryrun = false)
         @model = 'Object'
-        @files_directory = files_directory
+        @files_directory = files_directory # unused
         @metadata_file = metadata_file
         @dryrun = dryrun
-        @files = [] # we do files as a separate step, so send an empty array
+        @files = [] # don't send any files
       end
 
       def import_all
         count = 0
         if @dryrun == true
-          puts 'Analysing ... '
           analyser.each do |_attributes|
-            # could just not do the create and update steps, and return something!
-            puts 'not doing anything'
+            # TODO
           end
         else
           parser.each do |attributes|
-            @directory = attributes[:file_path]
-            attributes.delete(:file_path)
-            filesets = attributes[:files_hash]
-            @files = attributes[:files]
-            attributes.delete(:files_hash)
-            # other_files = attributes[:other_files] if attributes[:other_files].present?
-            # attributes.delete(:other_files)
             @model = attributes[:model]
             attributes.delete(:model)
             attributes[:edit_groups] = ['admin']
             create_fedora_objects(attributes)
-            add_filesets_to_work(attributes[:id], filesets)
+            add_to_work_filesets(attributes[:id], attributes.delete(:files_hash))
             count += 1
           end
         end
@@ -40,9 +31,9 @@ module Importer
 
       private
 
-        # Create a parser object with the metadata file and files directory
+        # Create a parser object with the metadata file
         def parser
-          Eprints::JsonParser.new(@metadata_file, @files_directory)
+          Eprints::JsonParser.new(@metadata_file)
         end
 
         # Create an analyser file with the metadata file and files directory
@@ -55,19 +46,16 @@ module Importer
         #
         # @param attributes [Hash] the object attributes
         def create_fedora_objects(attributes)
-          puts 'Creating Fedora objects ... '
-          attributes.delete(:files)
-          Factory.for(@model).new(attributes, @directory, @files).run
+          Factory.for(@model).new(attributes).run
         end
 
-        # Add filesets to the work
+        # Add to filesets for the work
         #
         # @param id [String] id of the work
-        # @param files_hash [Hash] info re files to add to work
-        def add_filesets_to_work(id, files_hash)
-          puts 'Adding filesets ... '
+        # @param files_hash [Hash] info about files to add to work
+        def add_to_work_filesets(id, files_hash)
           work = ActiveFedora::Base.find(id)
-          Eprints::JsonFilesProcessor.new(work, files_hash, @directory)
+          Eprints::JsonFilesProcessor.new(work, files_hash)
         end
     end
   end

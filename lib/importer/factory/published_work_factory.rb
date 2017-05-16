@@ -9,6 +9,12 @@ module Importer
       # def create_attributes
       #   #super.merge(resource_type: 'Image')
       # end
+
+
+      def file_attributes
+        { remote_files: @attributes[:remote_files] }
+      end
+
     end
   end
 end

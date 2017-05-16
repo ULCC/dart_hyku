@@ -14,12 +14,6 @@ def validate_json_file!(json_file)
   exit(1)
 end
 
-def validate_files_directory!(files_directory)
-  return if files_directory
-  $stderr.puts 'Please provide a files directory. Use "nofiles" to proceed without files'
-  exit(1)
-end
-
 def validate_dryrun!(dryrun)
   if dryrun
     $stderr.puts 'An analysis will be performed'
@@ -31,28 +25,26 @@ def validate_dryrun!(dryrun)
 end
 
 def load_rails
-  puts 'Loading environment...'
+  $stderr.puts 'Loading environment...'
   require File.expand_path('../../config/environment', __FILE__)
   require 'importer'
   puts 'Starting import...'
 end
 
-def main(hostname, json_file, files_directory, dryrun)
+def main(hostname, json_file, dryrun)
   validate_hostname!(hostname)
   validate_json_file!(json_file)
-  validate_files_directory!(files_directory)
   do_dryrun = validate_dryrun!(dryrun)
   load_rails
 
   AccountElevator.switch!(hostname)
-  size = Importer::Eprints::JsonImporter.new(json_file, files_directory, do_dryrun).import_all
+  size = Importer::Eprints::JsonImporter.new(json_file, do_dryrun).import_all
 
   puts "Imported #{size} record(s)."
 end
 
 def usage
-  $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file> <files directory> <dryrun>"
-  $stderr.puts "Usage: #{$PROGRAM_NAME} use 'nofiles' to do a metadata only import"
+  $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file> <dryrun>"
 end
 
-main(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
+main(ARGV[0], ARGV[1], ARGV[2])
