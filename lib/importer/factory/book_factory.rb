@@ -1,7 +1,7 @@
 module Importer
   module Factory
-    class ConferenceItemFactory < PublishedWorkFactory
-      self.klass = ConferenceItem
+    class BookFactory < PublishedWorkFactory
+      self.klass = Book
       # A way to identify objects that are not Hydra minted identifiers
       self.system_identifier_field = :identifier
 

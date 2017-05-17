@@ -7,6 +7,7 @@ module Importer
       autoload :ETDFactory
       autoload :ImageFactory
       autoload :ObjectFactory
+      autoload :BookFactory
       autoload :ConferenceItemFactory
       autoload :PublishedWorkFactory
       autoload :StringLiteralProcessor

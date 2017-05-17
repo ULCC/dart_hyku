@@ -65,8 +65,8 @@ module Importer
       # @return [Hash] event_title hash
       def event_title(val, event_type)
         event = val
-        event += " (#{event_type})" unless event_type.blank?
-        event.blank? ? { } : { presented_at: [event.to_s] }
+        event += " (#{event_type})" unless event.nil? || event_type.blank?
+        event.blank? ? {} : { presented_at: [event.to_s] }
       end
 
       # Standard fields
@@ -96,6 +96,7 @@ module Importer
         val.each do |corp|
           attributes[:creator] << corp
         end
+        attributes.delete(:creator) if attributes[:creator] == []
         attributes
       end
 
@@ -107,8 +108,10 @@ module Importer
       def creators(val, attributes)
         attributes[:creator] ||= []
         val.each do |cr|
-          attributes[:creator] << make_name(cr)
+          name = make_name(cr)
+          attributes[:creator] << name if name.present?
         end
+        attributes.delete(:creator) if attributes[:creator] == []
         attributes
       end
 
@@ -120,8 +123,10 @@ module Importer
       def editors(val, attributes)
         attributes[:editor] ||= []
         val.each do |ed|
-          attributes[:editor] << make_name(ed)
+          name = make_name(ed)
+          attributes[:editor] << name if name.present?
         end
+        attributes.delete(:editor) if attributes[:editor] == []
         attributes
       end
 
@@ -133,8 +138,10 @@ module Importer
       def contributors(val, attributes)
         attributes[:contributor] ||= []
         val.each do |co|
-          attributes[:contributor] << make_name(co)
+          name = make_name(co)
+          attributes[:contributor] << name if name.present?
         end
+        attributes.delete(:contributor) if attributes[:contributor] == []
         attributes
       end
 
@@ -163,8 +170,8 @@ module Importer
             files_hash[doc['main']][:visibility] = 'restricted' unless doc['security'] == 'public'
             uri = doc['uri'].split('/')
             remote_files << {
-                file_name: doc['main'],
-                url: "#{uri[0]}//#{uri[2]}/#{doc['eprintid']}/#{doc['pos']}/#{doc['main']}"
+              file_name: doc['main'],
+              url: "#{uri[0]}//#{uri[2]}/#{doc['eprintid']}/#{doc['pos']}/#{doc['main']}"
 
             }
           else

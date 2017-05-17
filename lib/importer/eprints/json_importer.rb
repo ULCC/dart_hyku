@@ -10,8 +10,12 @@ module Importer
         @files = [] # don't send any files
       end
 
+      # Import the items
+      #
+      # @return count of items imported
       def import_all
         count = 0
+        ids = []
         if @dryrun == true
           analyser.each do |_attributes|
             # TODO
@@ -22,8 +26,14 @@ module Importer
             attributes.delete(:model)
             attributes[:edit_groups] = ['admin']
             create_fedora_objects(attributes)
-            add_to_work_filesets(attributes[:id], attributes.delete(:files_hash))
+            ids << { attributes[:id] => attributes.delete(:files_hash) }
             count += 1
+          end
+          # Update filesets with extracted_text
+          #   do this as a separate step to allow jobs to complete
+          ids.each do |work|
+            id = work.keys.first
+            add_to_work_filesets(id, work[id])
           end
         end
         count

@@ -20,6 +20,7 @@ module Importer
           end
           # KFSPECIFIC - ensure indexcodes.txt is added to PDF
           next if @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files].blank?
+          next if fileset.label.ends_with?('.txt') # KFSEPECIFIC - this will error, so don't do it
           update_with_other_files(
             fileset,
             @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files]
@@ -66,14 +67,28 @@ module Importer
         # @param type [String] the 'type' of file
         def ingest_file(fileset, path, type)
           # This will not add anything to the text file; results in binary store / timeout error
+          #   STATUS: 500 org.modeshape.jcr.value.binary.BinaryStoreException:
+          #     java.io.IOException: java.util.concurrent.TimeoutException: Idle timeout expired: 30001/30000 ms
           #   added -XX:+UseG1GC to Java options to avoid 500 errors (@escowles suggestion); made no difference
-          #   same file will add to PDF, not txt
-          IngestFileJob.send(:perform_later,
-                             fileset, path,
-                             Hyrax.config.batch_user_key,
-                             relation: type,
-                             update_existing: true,
-                             versioning: false)
+          #   same file will add to PDF
+          # Moved away from IngestFileJob as it recharacterizes original_file and f***s it up
+          # Without the Derivatives part, below, the java.io exception above will happen on the PDF
+
+          local_file = Hydra::Derivatives::IoDecorator.new(File.open(path, "rb"))
+          local_file.original_name = path.split('/').last
+          Hydra::Works::AddFileToFileSet.call(fileset,
+                                              local_file,
+                                              type.to_sym,
+                                              versioning: false)
+
+          fileset.save!
+
+          # IngestFileJob.send(:perform_later,
+          #                    fileset, path,
+          #                    Hyrax.config.batch_user_key,
+          #                    relation: type,
+          #                    update_existing: true,
+          #                    versioning: false)
         rescue
           Rails.logger.error "Failed to add #{path}: #{$ERROR_INFO}"
         end

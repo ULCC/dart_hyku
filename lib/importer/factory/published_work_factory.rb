@@ -10,11 +10,13 @@ module Importer
       #   #super.merge(resource_type: 'Image')
       # end
 
+      def transform_attributes
+        attributes.slice(*permitted_attributes).merge(file_attributes)
+      end
 
       def file_attributes
         { remote_files: @attributes[:remote_files] }
       end
-
     end
   end
 end
