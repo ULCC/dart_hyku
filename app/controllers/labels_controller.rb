@@ -1,12 +1,9 @@
-class LabelsController < ApplicationController
-  before_action :set_site
-  load_and_authorize_resource instance_variable: :site, class: 'Site'
-  layout 'dashboard'
-
+class LabelsController < SitesController
   # GET /sites/1/edit
   def edit
     add_breadcrumb t(:'hyrax.controls.home'), root_path
     add_breadcrumb t(:'hyrax.dashboard.breadcrumbs.admin'), hyrax.dashboard_path
+    add_breadcrumb t(:'hyrax.admin.sidebar.configuration'), '#'
     add_breadcrumb t(:'hyrax.admin.sidebar.labels'), edit_site_labels_path
   end
 
@@ -23,10 +20,6 @@ class LabelsController < ApplicationController
   end
 
   private
-
-    def set_site
-      @site ||= Site.instance
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def site_params
