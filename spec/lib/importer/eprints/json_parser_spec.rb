@@ -1,4 +1,4 @@
-require 'importer'
+  require 'importer'
 require 'importer/eprints'
 
 RSpec.describe Importer::Eprints::JsonParser do
@@ -48,12 +48,12 @@ RSpec.describe Importer::Eprints::JsonParser do
       date_published: "1968",
       visibility: "open",
       model: "PublishedWork",
-      remote_files: [{ file_name: "006289.txt", url: "http://archive.kingsfund.org.uk/6289/1/006289.txt" },
-                     { file_name: "006289.pdf", url: "http://archive.kingsfund.org.uk/6289/2/006289.pdf" }],
+      remote_files: [{ file_name: "006289.txt", url: "http://some.url.org/6289/1/006289.txt" },
+                     { file_name: "006289.pdf", url: "http://some.url.org/6289/2/006289.pdf" }],
       files_hash: { "006289.txt" =>
                           { additional_files: [
                             { file_name: "indexcodes.txt",
-                              url: "http://archive.kingsfund.org.uk/6289/3/indexcodes.txt",
+                              url: "http://some.url.org/6289/3/indexcodes.txt",
                               type: "extracted_text" }
                           ] },
                     "006289.pdf" => {} }

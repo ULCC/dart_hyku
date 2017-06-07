@@ -9,7 +9,7 @@ RSpec.describe Importer::Eprints::JsonFilesProcessor do
     { "006289.txt" =>
          { additional_files: [
            { file_name: "indexcodes.txt",
-             url: "http://archive.kingsfund.org.uk/6289/3/indexcodes.txt",
+             url: "http://some.url.org/6289/3/indexcodes.txt",
              type: "extracted_text" }
          ] },
       "006289.pdf" => {} }
@@ -20,9 +20,9 @@ RSpec.describe Importer::Eprints::JsonFilesProcessor do
   end
 
   it 'all the receives' do
-    stub_request(:get, "http://archive.kingsfund.org.uk/6289/3/indexcodes.txt")
+    stub_request(:get, "http://some.url.org/6289/3/indexcodes.txt")
       .to_return(status: 200, body: "here is some content", headers: {})
-    expect(Hydra::Works::AddFileToFileSet).to receive(:call).exactly(2).times
+    expect(Hydra::Works::AddFileToFileSet).to receive(:call).exactly(1).times
     processor.update_fileset
   end
 end

@@ -3,7 +3,7 @@ require 'importer/eprints'
 
 RSpec.describe Importer::Eprints::JsonImporter do
   let(:metadata_file) { 'spec/fixtures/eprints_json/eprints.json' }
-  let(:importer) { described_class.new(metadata_file, '') }
+  let(:importer) { described_class.new(metadata_file) }
   let(:actor) { double }
   let(:published_work_factory) { double }
 
