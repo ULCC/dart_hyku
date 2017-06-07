@@ -2,11 +2,9 @@ module Importer
   # Import an Eprints3 json file.
   module Eprints
     class JsonImporter
-      def initialize(metadata_file, files_directory, dryrun = false)
+      def initialize(metadata_file)
         @model = 'Object'
-        @files_directory = files_directory # unused
         @metadata_file = metadata_file
-        @dryrun = dryrun
         @files = [] # don't send any files
       end
 
@@ -16,11 +14,6 @@ module Importer
       def import_all
         count = 0
         ids = []
-        if @dryrun == true
-          analyser.each do |_attributes|
-            # TODO
-          end
-        else
           parser.each do |attributes|
             @model = attributes[:model]
             attributes.delete(:model)
@@ -35,7 +28,7 @@ module Importer
             id = work.keys.first
             add_to_work_filesets(id, work[id])
           end
-        end
+
         count
       end
 
@@ -44,12 +37,6 @@ module Importer
         # Create a parser object with the metadata file
         def parser
           Eprints::JsonParser.new(@metadata_file)
-        end
-
-        # Create an analyser file with the metadata file and files directory
-        def analyser
-          []
-          # EP3JsonAnalyser.new(@metadata_file, @files_directory)
         end
 
         # Build a factory to create the objects in fedora.
@@ -65,7 +52,8 @@ module Importer
         # @param files_hash [Hash] info about files to add to work
         def add_to_work_filesets(id, files_hash)
           work = ActiveFedora::Base.find(id)
-          Eprints::JsonFilesProcessor.new(work, files_hash)
+          file_processor = Eprints::JsonFilesProcessor.new(work, files_hash)
+          file_processor.update_fileset
         end
     end
   end

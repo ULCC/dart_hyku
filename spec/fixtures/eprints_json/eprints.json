@@ -1,6 +1,7 @@
 [
   {
     "source": "kfpubs.mrc",
+    "field_i_dont_understand": "stuff",
     "eprintid": 6289,
     "date": 1968,
     "userid": 1,

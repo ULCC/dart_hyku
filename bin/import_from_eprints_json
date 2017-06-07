@@ -14,16 +14,6 @@ def validate_json_file!(json_file)
   exit(1)
 end
 
-def validate_dryrun!(dryrun)
-  if dryrun
-    $stderr.puts 'An analysis will be performed'
-    true
-  else
-    $stderr.puts 'An import will be performed'
-    false
-  end
-end
-
 def load_rails
   $stderr.puts 'Loading environment...'
   require File.expand_path('../../config/environment', __FILE__)
@@ -34,13 +24,13 @@ end
 def main(hostname, json_file, dryrun)
   validate_hostname!(hostname)
   validate_json_file!(json_file)
-  do_dryrun = validate_dryrun!(dryrun)
   load_rails
 
   AccountElevator.switch!(hostname)
-  size = Importer::Eprints::JsonImporter.new(json_file, do_dryrun).import_all
+  size, errors = Importer::Eprints::JsonImporter.new(json_file).import_all
 
   puts "Imported #{size} record(s)."
+  puts "List of errors: #{errors}"
 end
 
 def usage

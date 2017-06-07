@@ -40,6 +40,7 @@ module Importer
             begin
               attributes = method(k).call(v, attributes)
             rescue
+              $stderr.puts "\nNo method for field #{k} - see log for details"
               Rails.logger.warn "No method for field #{k} (#{$ERROR_INFO.message})"
             end
           end

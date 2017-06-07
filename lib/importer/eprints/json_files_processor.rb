@@ -6,7 +6,6 @@ module Importer
       def initialize(work, files_hash)
         @work = work
         @files_hash = files_hash
-        update_fileset
       end
 
       # Update fileset
@@ -35,8 +34,8 @@ module Importer
         # @param fileset [FileSet] fileset to update
         # @param visibility [String] the fileset visibility
         def update_visibility(fileset, visibility)
-          fileset.visibility = visibility unless fileset.visibility == visibility
-          fileset.save unless fileset.visibility == visibility
+          fileset.visibility = visibility
+          fileset.save
         end
 
         # Update the work to ensure it uses the thumbnail / representative from the primary fileset
@@ -90,6 +89,7 @@ module Importer
           #                    update_existing: true,
           #                    versioning: false)
         rescue
+          $stderr.puts "\nFailed to add #{path} - see log for details"
           Rails.logger.error "Failed to add #{path}: #{$ERROR_INFO}"
         end
 
