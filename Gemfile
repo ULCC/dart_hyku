@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 # dart_hyku
 gem 'dog_biscuits', :git => 'https://github.com/geekscruff/dog_biscuits.git', :branch => 'kfpub'
 gem 'dotenv-rails'
+gem 'omniauth-shibboleth'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'

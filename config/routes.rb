@@ -25,7 +25,14 @@ Rails.application.routes.draw do
 
   root 'hyrax/homepage#index'
 
-  devise_for :users
+  # devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "omniauthcallbacks" }, :skip => [:sessions]
+  devise_scope :user do
+    match "/users/auth/shibboleth" => "omniauth_callbacks#passthru", as: "new_user_session", via: [:get]
+    match "/users/sign_in" => "devise/sessions#new", as: "new_local_user_session", via: [:get]
+    match "/users/sign_in" => "devise/sessions#create", as: "user_session", via: [:post]
+    match "/users/sign_out" => "devise/sessions#destroy", as: "destroy_user_session", via: [:get]
+  end
   mount Qa::Engine => '/authorities'
 
   mount Blacklight::Engine => '/'
