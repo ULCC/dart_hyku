@@ -1,6 +1,7 @@
 class OmniauthcallbacksController < Devise::OmniauthCallbacksController
 
   # handle omniauth logins from shibboleth
+  # cf https://github.com/toyokazu/omniauth-shibboleth/issues/6
   def shibboleth
     @user = User.from_omniauth(request.env["omniauth.auth"])
     # capture data about the user from shib

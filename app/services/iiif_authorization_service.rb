@@ -11,6 +11,10 @@ class IIIFAuthorizationService
   private
 
     def file_set_id_for(object)
-      object.id.split('/').first
+      if object.id.include? '/'
+        object.id.split('/').first
+      else
+        URI.decode(object.id).sub(/\A([^\/]*)\/.*/, '\1')
+      end
     end
 end

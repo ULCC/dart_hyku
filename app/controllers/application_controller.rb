@@ -78,4 +78,10 @@ class ApplicationController < ActionController::Base
     def peek_controller?
       is_a? Peek::ResultsController
     end
+
+    # Shibboleth login was making a POST request to the dashboard; this makes it a GET
+    def after_sign_in_path_for(resource)
+      hyrax.dashboard_path
+    end
+
 end

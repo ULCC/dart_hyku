@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
       user.email = auth.uid
       user.password = Devise.friendly_token[0,20]
+      # TMP Shib login is adding admin role to all users
+      remove_role :admin, Site.instance if user.class.any?
     end
   end
 
@@ -62,6 +64,7 @@ class User < ActiveRecord::Base
   private
 
     def add_default_roles
-      add_role :admin, Site.instance unless self.class.any?
+      # TODO Disabled as adding admin to all shib users
+      # add_role :admin, Site.instance unless self.class.any?
     end
 end
