@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     match "/users/sign_in" => "devise/sessions#create", as: "user_session", via: [:post]
     match "/users/sign_out" => "devise/sessions#destroy", as: "destroy_user_session", via: [:get]
   end
+  # devise_for :users, controllers: { registrations: 'hyku/registrations' }
   mount Qa::Engine => '/authorities'
 
   mount Blacklight::Engine => '/'

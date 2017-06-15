@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   include Blacklight::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :invitable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # allow omniauth (including shibboleth) logins - this will create a local user based on an omniauth/shib login
