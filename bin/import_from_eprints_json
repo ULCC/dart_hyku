@@ -27,14 +27,13 @@ def main(hostname, json_file, dryrun)
   load_rails
 
   AccountElevator.switch!(hostname)
-  size, errors = Importer::Eprints::JsonImporter.new(json_file).import_all
+  size = Importer::Eprints::JsonImporter.new(json_file).import_all
 
-  puts "Imported #{size} record(s)."
-  puts "List of errors: #{errors}"
+  $stderr.puts "Imported #{size} record(s)."
 end
 
 def usage
-  $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file> <dryrun>"
+  $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <json file>"
 end
 
 main(ARGV[0], ARGV[1], ARGV[2])

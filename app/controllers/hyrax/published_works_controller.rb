@@ -8,6 +8,6 @@ module Hyrax
     include Hyrax::BreadcrumbsForWorks
     include Hyku::IIIFManifest
     self.curation_concern_type = ::PublishedWork
-    self.show_presenter = PublishedWorksPresenter
+    self.show_presenter = Hyrax::PublishedWorkPresenter
   end
 end

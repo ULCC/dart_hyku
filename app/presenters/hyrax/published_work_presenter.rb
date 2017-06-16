@@ -1,4 +1,4 @@
-class PublishedWorksPresenter < Hyrax::WorkShowPresenter
+class PublishedWorkPresenter < ::ManifestEnabledWorkShowPresenter
 
   # these correspond to the method names in solr_document.rb
   delegate :isbn,

@@ -9,6 +9,6 @@ module Hyrax
     include Hyku::IIIFManifest
     self.curation_concern_type = ::ConferenceItem
     # Use this line if you want to use a custom presenter
-    self.show_presenter = ConferenceItemPresenter
+    self.show_presenter = Hyrax::ConferenceItemPresenter
   end
 end
