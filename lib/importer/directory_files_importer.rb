@@ -12,21 +12,21 @@ module Importer
       @files_directory = files_directory.chomp('/')
       @metadata_file = metadata_file
       @depth = depth
-      @Model = 'Object' # Updating existing objects, so no need to set model
     end
 
     def import_all
       count = 0
       parser.each do | row |
         begin
-          puts row
           obj = ActiveFedora::Base.find(row[0])
+          @model = obj.class
           attributes = obj.attributes
-          attributes['files'] = row[1]
+          attributes[:id] = row[0]
+          attributes[:files] = row[1]
           create_fedora_objects(attributes)
         rescue
-          "\nObject with id #{row[0]} was not found - skipping this line"
-          Rails.logger.warn "Object with id #{row[0]} was not found (#{$ERROR_INFO.message})"
+          $stderr.puts("\nSomething went wrong with #{row[0]} - skipping this line - check logs for details")
+          Rails.logger.warn "Something went wrong with #{row[0]} (#{$ERROR_INFO.message})"
         end
         count += 1
       end
@@ -41,7 +41,13 @@ module Importer
 
       # Build a factory to create the objects in fedora.
       def create_fedora_objects(attributes)
-        Factory.for(model).new(attributes, @files_directory).run
+        Factory.for(@model).new(attributes, @files_directory, files(attributes)).run
+      end
+
+      # @param [Hash] attributes the attribuutes from the parser
+      # @return [Array] a list of file names to import
+      def files(attributes)
+        attributes[:files]
       end
   end
 end

@@ -5,13 +5,13 @@ module Importer
     def initialize(metadata_file, files_directory, depth)
       @file_name = metadata_file
       @directory = files_directory
-      @depth = depth
+      @depth = depth.to_i
     end
 
     # @yieldparam attributes [Hash] the attributes from one row of the file
     def each(&_block)
       CSV.foreach(@file_name) do |row|
-        [row[0],build_files_hash(row[1])]
+        yield [row[0],build_files_hash(row[1])]
       end
     end
 
@@ -22,7 +22,7 @@ module Importer
           file = File.join(@directory, directory_or_file)
           return [] unless check_file(file)
           [directory_or_file]
-        elsif depth > 0
+        elsif @depth > 0
           dir = File.join(@directory,directory_or_file)
           return [] unless check_dir(dir)
           [build_file_path(dir)]
