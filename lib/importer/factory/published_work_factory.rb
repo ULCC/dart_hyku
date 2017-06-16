@@ -15,7 +15,10 @@ module Importer
       end
 
       def file_attributes
-        { remote_files: @attributes[:remote_files] }
+        hash = {}
+        hash[:remote_files] = attributes[:remote_files] unless attributes[:remote_files].nil?
+        hash[:uploaded_files] = attributes[:uploaded_files] unless attributes[:uploaded_files].nil?
+        hash
       end
     end
   end

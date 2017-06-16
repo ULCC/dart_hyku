@@ -22,7 +22,7 @@ module Importer
           @model = obj.class
           attributes = obj.attributes
           attributes[:id] = row[0]
-          attributes[:files] = row[1]
+          attributes[:uploaded_files] = row[1]
           create_fedora_objects(attributes)
         rescue
           $stderr.puts("\nSomething went wrong with #{row[0]} - skipping this line - check logs for details")
@@ -41,13 +41,8 @@ module Importer
 
       # Build a factory to create the objects in fedora.
       def create_fedora_objects(attributes)
-        Factory.for(@model).new(attributes, @files_directory, files(attributes)).run
+        Factory.for(@model).new(attributes).run
       end
 
-      # @param [Hash] attributes the attribuutes from the parser
-      # @return [Array] a list of file names to import
-      def files(attributes)
-        attributes[:files]
-      end
   end
 end

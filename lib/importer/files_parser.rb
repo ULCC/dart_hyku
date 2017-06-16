@@ -21,11 +21,11 @@ module Importer
         if @depth == 0
           file = File.join(@directory, directory_or_file)
           return [] unless check_file(file)
-          [directory_or_file]
+          build_files([file])
         elsif @depth > 0
           dir = File.join(@directory,directory_or_file)
           return [] unless check_dir(dir)
-          [build_file_path(dir)]
+          build_files(build_file_path(dir))
         end
       end
 
@@ -36,7 +36,19 @@ module Importer
           i -= 1
         end
         # Reject directories at this point
-        Dir.glob(path).reject{ |e| File.directory? e }.sub("#{@directory}/",'')
+        Dir.glob(path).reject{ |e| File.directory? e }
+      end
+
+      def build_files(files)
+        files_array = []
+        files.each do | file |
+          u = Hyrax::UploadedFile.new
+          u.user_id = User.find_by_user_key( User.batch_user_key ).id
+          u.file = CarrierWave::SanitizedFile.new(file)
+          u.save
+          files_array <<  u.id
+        end
+        files_array
       end
 
       def check_file(path)
