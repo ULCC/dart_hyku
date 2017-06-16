@@ -12,7 +12,7 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  # JA took me a day to figure this out; use inline for dev by default
+  # JA use inline for dev by default
   require 'active_job/queue_adapters/better_active_elastic_job_adapter'
   config.active_job.queue_adapter = :inline
 

@@ -7,4 +7,6 @@ module Importer
   autoload :ModsParser
   autoload :Eprints
   autoload :Factory
+  autoload :DirectoryFilesImporter
+  autoload :FilesParser
 end
