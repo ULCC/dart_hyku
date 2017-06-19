@@ -1,7 +1,7 @@
 # Generated via
 #  `rails generate hyrax:work ConferenceItem`
 module Hyrax
-  class ConferenceItemPresenter < ::ManifestEnabledWorkShowPresenter
+  class ConferenceItemPresenter < Hyku::ManifestEnabledWorkShowPresenter
 
     # these correspond to the method names in solr_document.rb
     delegate :isbn,

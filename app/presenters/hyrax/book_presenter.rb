@@ -1,7 +1,7 @@
 # Generated via
 #  `rails generate hyrax:work Book`
 module Hyrax
-  class BookPresenter < ::ManifestEnabledWorkShowPresenter
+  class BookPresenter < Hyku::ManifestEnabledWorkShowPresenter
 
     # these correspond to the method names in solr_document.rb
     delegate :isbn,

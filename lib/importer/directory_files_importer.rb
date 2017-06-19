@@ -20,9 +20,7 @@ module Importer
         begin
           obj = ActiveFedora::Base.find(row[0])
           @model = obj.class
-          attributes = obj.attributes
-          attributes[:id] = row[0]
-          attributes[:uploaded_files] = row[1]
+          attributes = { id: row[0], uploaded_files: row[1] }
           create_fedora_objects(attributes)
         rescue
           $stderr.puts("\nSomething went wrong with #{row[0]} - skipping this line - check logs for details")
