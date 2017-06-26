@@ -79,7 +79,7 @@ services:
       - 8983
     volumes:
       - .:/app
-      - solr:/data
+      - solr:/opt/solr/server/solr
     networks:
       internal:
 
@@ -123,7 +123,7 @@ services:
 
   web:
     extends: app
-    command: bundle exec rails server -p 3000 -b '0.0.0.0'
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
     depends_on:
       - db
       - solr
@@ -177,13 +177,13 @@ services:
       - DOCKER_TLS_VERIFY
       - DOCKER_HOST
       - DOCKER_CERT_PATH
-    volumes:
-      - $DOCKER_CERT_PATH:$DOCKER_CERT_PATH
     ports:
       - 8080:80
       - 8443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      # You must uncomment this line if and only if you are running docker-machine
+      # - $DOCKER_CERT_PATH:$DOCKER_CERT_PATH
     networks:
       internal:
       external:
