@@ -3,17 +3,32 @@ module Importer
   #  The CSV should not contain a header row.
   #  The first column must be the work id.
   #  The second column must be the directory containing the files OR the filename itself.
-  class DirectoryFilesImporter
-    # depth 0 = files in the specified directory
-    # depth 1+ = files in the nth directory,
-    #  1 = files_directory/directory_from_csv/files
-    #  2 = files_directory/directory_from_csv/another_directory/files
+
+  # depth 0 = files in the specified directory
+  # depth n = files in the nth directory,
+  #  1 = files_directory/directory_from_csv/files
+  #  2 = files_directory/directory_from_csv/another_directory/files
+
+
+class DirectoryFilesImporter
+    # Initialize
+    #
+    # @param metadata_file [String] path to the metadata csv file
+    # @param files_directory [String] path of the directory containing the files to ingest
+    # @param depth [FixNum] the directory depth at which to find the files
+    #   depth 0 = files in the specified directory
+    #   depth n = files in the nth directory,
+    #   1 = files_directory/directory_from_csv/files
+    #   2 = files_directory/directory_from_csv/another_directory/files
     def initialize(metadata_file, files_directory, depth)
       @files_directory = files_directory.chomp('/')
       @metadata_file = metadata_file
       @depth = depth
     end
 
+    # Import the items
+    #
+    # @return count of items imported
     def import_all
       count = 0
       parser.each do | row |
@@ -33,6 +48,7 @@ module Importer
 
     private
 
+      # Create a parser object with the metadata file, files directory and depth
       def parser
         FilesParser.new(@metadata_file, @files_directory, @depth)
       end

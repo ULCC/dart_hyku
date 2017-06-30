@@ -16,14 +16,16 @@ end
 
 def validate_files_directory!(files_directory)
   return if files_directory
-  $stderr.puts 'Files directory was left blank. No files will be ingested'
+  $stderr.puts 'Please provide a files directory to import from.'
+  exit(1)
 end
 
 def validate_depth!(depth)
-  return 0 if depth == false || depth == "0" || depth.to_i != 0
+  return depth if depth == 0
   return depth.to_i if depth == "0"
   return depth.to_i if depth.to_i != 0
-  $stderr.puts 'Depth must be a number. No files will be ingested'
+  $stderr.puts 'Depth must be provided and it must be a number.'
+  exit(1)
 end
 
 def load_rails
@@ -48,6 +50,8 @@ end
 
 def usage
   $stderr.puts "Usage: #{$PROGRAM_NAME} <hostname> <csv file> <files directory> <depth>"
+  $stderr.puts "The csv file must contain two columns, the first is the id of the object to update; the second is the filename (for 0 depth) or directory (for 1 plus depths) to ingest."
+  $stderr.puts "Depth is the number of directories to navigate down to the files to ingest. 0 means the files are in the files_directory. 1 means they are one directory down and so on."
 end
 
 main(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
