@@ -17,7 +17,7 @@ module Importer
             update_work(fileset) # KFSPECIFIC - this will be the PDF
             update_visibility(fileset, @files_hash[fileset.label][:visibility])
           end
-          # KFSPECIFIC - ensure indexcodes.txt is added to PDF
+          # KFSPECIFIC - ensure indexcodes.txt is added to PDF instead of TXT
           next if @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files].blank?
           next if fileset.label.ends_with?('.txt') # KFSEPECIFIC - this will error, so don't do it
           update_with_other_files(

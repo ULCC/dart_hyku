@@ -18,6 +18,7 @@ module Importer
             @model = attributes[:model]
             attributes.delete(:model)
             attributes[:edit_groups] = ['admin']
+            # TODO add default rights_statement
             create_fedora_objects(attributes)
             ids << { attributes[:id] => attributes.delete(:files_hash) }
             count += 1

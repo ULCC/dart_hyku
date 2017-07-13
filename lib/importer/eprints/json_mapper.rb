@@ -34,7 +34,12 @@ module Importer
 
       # Special fields
 
-      # Use metadata_visibility and eprint_status to construct this
+      # Use metadata_visibility and eprint_status to construct the access setting
+      #  set to public if the metadata is set to 'show' AND the eprint_status is 'archive'
+      #  otherwise set to restricted
+      #
+      # @param metadata_visibility [String] the metadata visibility
+      # @param eprint_status [String] the eprint status
       def access_setting(metadata_visibility, eprint_status)
         if metadata_visibility == 'show' && eprint_status == 'archive'
           { visibility: 'open' }
@@ -76,7 +81,7 @@ module Importer
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
-      # TODO: should this be a separate field? schema alternative name?
+      # TODO: consider separate field, eg. schema alternative name
       def alt_title(val, attributes)
         if attributes[:title].blank?
           attributes[:title] = [val]
@@ -223,8 +228,11 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def ispublished(val, attributes)
-        # TODO: lookup
-        attributes[:pulication_status] = val
+        # TODO: extend for other cases
+        case val
+          when 'pub'
+            attributes[:pulication_status] = 'http://london.ac.uk/publication_status#published'
+        end
         attributes
       end
 
@@ -238,13 +246,12 @@ module Importer
         attributes
       end
 
-      # Add note to attributes
+      # Add note to attributes as description
       #
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def note(val, attributes)
-        # TODO: use a different note field?
         attributes[:description] = [val]
         attributes
       end
@@ -299,13 +306,13 @@ module Importer
         attributes
       end
 
-      # Add pre_type to attributes
+      # Add pre_type to attributes as resource type
       #
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def pres_type(val, attributes)
-        # TODO: lookup
+        # TODO: resource type lookup
         if attributes[:resource_type].blank?
           attributes[:resource_type] = [val]
         else
@@ -354,7 +361,11 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def subjects(val, attributes)
-        attributes[:subject] = [val.to_s]
+        case val
+          # KFSPECIFIC
+          when 'RA0421'
+            attributes[:subject] = ['RA0421: Public health. Hygiene. Preventive medicine']
+        end
         attributes
       end
 
@@ -378,7 +389,7 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def type(val, attributes)
-        # TODO: lookup
+        # TODO: resource type lookup
         if attributes[:resource_type].blank?
           attributes[:resource_type] = [val]
         else
@@ -413,7 +424,7 @@ module Importer
           tmp_files_hash
         end
 
-        # Add relations to the files_hash
+        # Add relations to the files_hash. Currently only isIndexCodesVersionOf is supported.
         #
         # @param doc [Hash] the documents hash
         # @param tmp_files_hash [Hash] the temporary files_hash
