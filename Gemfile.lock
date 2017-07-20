@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/ULCC/iiif_manifest
+  revision: bea92f28e921598e3d5f8d6209f5dbec873e17de
+  branch: hyku_1372_rendering
+  specs:
+    iiif_manifest (0.2.0)
+      activesupport (>= 4)
+      iiif-presentation (~> 0.2.0)
+
+GIT
   remote: https://github.com/projecthydra-labs/hyrax.git
   revision: 5bd285ed56fba95f4f414724fc00d5dcd657b3fe
   ref: 5bd285ed56fba95f4f414724fc00d5dcd657b3fe
@@ -405,9 +414,6 @@ GEM
       activesupport (>= 3.2.18)
       faraday (>= 0.9)
       json
-    iiif_manifest (0.2.0)
-      activesupport (>= 4)
-      iiif-presentation (~> 0.2.0)
     inflecto (0.0.2)
     is_it_working (1.1.0)
     iso-639 (0.2.8)
@@ -899,7 +905,7 @@ DEPENDENCIES
   hyrax!
   i18n-debug
   i18n-tasks
-  iiif_manifest (~> 0.2.0)
+  iiif_manifest!
   is_it_working
   jbuilder (~> 2.5)
   jquery-rails
@@ -940,4 +946,4 @@ DEPENDENCIES
   zk
 
 BUNDLED WITH
-   1.15.1
+   1.15.2
