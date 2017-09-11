@@ -9,6 +9,8 @@ module Importer
       autoload :ObjectFactory
       autoload :StringLiteralProcessor
       autoload :WithAssociatedCollection
+      autoload :ConferenceItemFactory
+      autoload :PublishedWorkFactory
     end
 
     # @param [#to_s] First (Xxx) portion of an "XxxFactory" constant
