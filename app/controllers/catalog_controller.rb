@@ -60,6 +60,10 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("publisher", :facetable), limit: 5
     config.add_facet_field solr_name("file_format", :facetable), limit: 5
 
+    # Published Work / Conferrence Item
+    config.add_facet_field solr_name("date", :facetable), label: "Date", limit: 5
+    config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
+
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
     # handler defaults, or have no facets.
@@ -84,6 +88,10 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("format", :stored_searchable)
     config.add_index_field solr_name("identifier", :stored_searchable)
     config.add_index_field solr_name('extent', :stored_searchable)
+
+    # Published Work / Conference Item
+    config.add_index_field solr_name("editor", :stored_searchable), label: "Editor", itemprop: 'editor'
+    config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword", itemprop: 'about'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
