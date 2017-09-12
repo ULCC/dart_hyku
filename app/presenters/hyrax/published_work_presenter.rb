@@ -21,6 +21,7 @@ module Hyrax
              :edition,
              :series,
              :place_of_publication,
+             :note,
              to: :solr_document
 
   end

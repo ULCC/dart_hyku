@@ -12,10 +12,10 @@ class User < ActiveRecord::Base
   include Blacklight::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :invitable, :registerable,
+  devise :database_authenticatable, :invitable, # :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  before_create :add_default_roles
+  # before_create :add_default_roles
 
   # Method added by Blacklight; Blacklight uses #to_s on your
   # user class to get a user-displayable login/identifier.
