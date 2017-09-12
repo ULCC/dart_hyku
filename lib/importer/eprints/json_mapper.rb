@@ -172,7 +172,6 @@ module Importer
             remote_files << {
               file_name: doc['main'],
               url: "#{uri[0]}//#{uri[2]}/#{doc['eprintid']}/#{doc['pos']}/#{doc['main']}"
-
             }
           else
             files_hash = add_relation(doc, tmp_files_hash, files_hash)
@@ -180,6 +179,7 @@ module Importer
         end
         attributes[:files_hash] = files_hash
         attributes[:remote_files] = remote_files
+        puts remote_files
         attributes
       end
 

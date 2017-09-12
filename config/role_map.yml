@@ -1,6 +1,8 @@
 development:
   archivist:
     - archivist1@example.com
+  admin:
+    - julie.allinson@london.ac.uk
 test:
   archivist:
     - archivist1@example.com

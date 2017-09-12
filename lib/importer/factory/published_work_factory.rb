@@ -20,8 +20,8 @@ module Importer
       # @return hash of remote_files and/or uploaded_files
       def file_attributes
         hash = {}
-        hash[:remote_files] = attributes[:remote_files] unless attributes[:remote_files].nil?
-        hash[:uploaded_files] = attributes[:uploaded_files] unless attributes[:uploaded_files].nil?
+        hash[:remote_files] = attributes[:remote_files] unless attributes[:remote_files].blank?
+        hash[:uploaded_files] = attributes[:uploaded_files] unless attributes[:uploaded_files].blank?
         hash
       end
     end
