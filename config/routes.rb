@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  require 'sidekiq/web'
+  # authenticate :user, lambda { |u| u.admin? } do
+  mount Sidekiq::Web => '/sidekiq'
+  # end
+
   if Settings.multitenancy.enabled
     constraints host: Account.admin_host do
       get '/account/sign_up' => 'account_sign_up#new', as: 'new_sign_up'
