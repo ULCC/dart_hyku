@@ -6,7 +6,7 @@ module Hyrax
     self.terms += [:resource_type]
 
     # remove things with
-    self.terms -= [:based_near, :date_created, :source]
+    self.terms -= [:based_near, :date_created, :source, :description]
 
     # use + to replace the whole set of terms
     # this defines form order
@@ -26,7 +26,8 @@ module Hyrax
                    :part,
                    :edition,
                    :series,
-                   :place_of_publication
+                   :place_of_publication,
+                   :note
     ]
   end
 end

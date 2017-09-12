@@ -19,6 +19,7 @@ module Hyrax
              :proceeding,
              :origin_date,
              :presented_at,
+             :note,
              to: :solr_document
   end
 end
