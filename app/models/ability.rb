@@ -23,6 +23,9 @@ class Ability
     can [:read, :update], Account do |account|
       account == Site.account
     end
+
+    can :read, :invitations
+
   end
 
   def group_permissions

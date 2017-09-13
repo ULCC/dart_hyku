@@ -59,6 +59,6 @@ geonames_username: 'jcoyne'
 contact_email: "julie.allinson@london.ac.uk"
 
 devise:
-  account_signup: true
+  account_signup: false
   # The address from which user invitations are sent
   invitation_from_email: "change-me-in-hyku-settings@example.org"
