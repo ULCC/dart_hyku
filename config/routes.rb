@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
 
-  require 'sidekiq/web'
-  # authenticate :user, lambda { |u| u.admin? } do
-  mount Sidekiq::Web => '/sidekiq'
-  # end
+  # require 'sidekiq/web'
+  # mount Sidekiq::Web => '/sidekiq'
 
   if Settings.multitenancy.enabled
     constraints host: Account.admin_host do
@@ -30,7 +28,8 @@ Rails.application.routes.draw do
 
   root 'hyrax/homepage#index'
 
-  devise_for :users, controllers: { registrations: 'hyku/registrations' }
+  devise_for :users, controllers: { registrations: 'hyku/registrations', invitations: 'invitations' }
+
   mount Qa::Engine => '/authorities'
 
   mount Blacklight::Engine => '/'
