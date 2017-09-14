@@ -1,4 +1,6 @@
 class InvitationsController < Devise::InvitationsController
+
+  # TODO test
   before_action :ensure_admin!, :only => [:new, :create]
 
   private
