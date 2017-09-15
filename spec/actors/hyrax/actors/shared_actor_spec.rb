@@ -7,7 +7,7 @@ RSpec.describe Hyrax::Actors::SharedActor do
   let(:env) { Hyrax::Actors::Environment.new(work, ability, attributes) }
   let(:terminator) { Hyrax::Actors::Terminator.new }
   let(:depositor) { create(:user) }
-  let(:work) { create(:published_work) }
+  let(:work) { create(:published_work) } # creates with an id of 'test_id'
 
   let(:attributes) { {title: ['Foo Bar', ''], refereed: ""} }
   let(:terminator) {Hyrax::Actors::Terminator.new}
@@ -22,6 +22,11 @@ RSpec.describe Hyrax::Actors::SharedActor do
   it "removes blank single-valued attributes" do
     middleware.create(env)
     expect(work.refereed).to eq(nil)
+  end
+
+  it "does not remove id" do
+    middleware.create(env)
+    expect(work.id).to eq('id')
   end
 
   it "removes blank multi-valued attributes" do

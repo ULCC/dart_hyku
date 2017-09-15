@@ -7,14 +7,14 @@ module Hyrax
       # @param [Hyrax::Actors::Environment] env
       # @return [Boolean] true if create was successful
       def create(env)
-        apply_singlevalued(env)
+        #apply_singlevalued(env)
         super
       end
 
       # @param [Hyrax::Actors::Environment] env
       # @return [Boolean] true if update was successful
       def update(env)
-        apply_singlevalued(env)
+        #apply_singlevalued(env)
         super
       end
 
@@ -31,9 +31,11 @@ module Hyrax
       #   remove_singlevalued!
       #   self.attributes['date_available']
       # => nil
+      # Do not delete the :id attribute!
       def remove_singlevalued!(attributes)
         singlevalued_form_attributes(attributes).each do |k,v|
           attributes[k] = nil if v == ""
+          attributes[k] = v if k == :id # keep the id
         end
         attributes
       end
