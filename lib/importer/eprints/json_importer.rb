@@ -17,9 +17,13 @@ module Importer
           parser.each do |attributes|
             @model = attributes[:model]
             attributes.delete(:model)
+            # TEMP
+            attributes.delete(:remote_files)
+            # TEMP END
             attributes[:edit_groups] = ['admin']
             create_fedora_objects(attributes)
-            ids << { attributes[:id] => attributes.delete(:files_hash) }
+            #ids << { attributes[:id] => attributes.delete(:files_hash) }
+            add_to_collection(attributes[:id])
             count += 1
           end
           # Update filesets with extracted_text
@@ -55,6 +59,15 @@ module Importer
           file_processor = Eprints::JsonFilesProcessor.new(work, files_hash)
           file_processor.update_fileset
         end
+      #TEMP!!!
+      def add_to_collection(id)
+        work = ActiveFedora::Base.find(id)
+        collections = work.member_of_collections
+        collections << ActiveFedora::Base.find('190de7b8-86d4-41be-ad8f-6fd7e51231e3')# 'b81cd60c-5726-4309-925e-b8d32f4fe79e'
+        work.member_of_collections = collections
+        work.save
+      end
+
     end
   end
 end

@@ -52,6 +52,7 @@ group :development, :test do
 
   gem 'rubocop', '~> 0.47.0'
   gem 'rubocop-rspec', '~> 1.10.0'
+  gem 'term-ansicolor'
 end
 
 group :test do
