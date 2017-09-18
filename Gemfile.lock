@@ -1,16 +1,8 @@
 GIT
-  remote: https://github.com/geekscruff/dog_biscuits.git
-  revision: b4971de2cf209a8c6ccbfd427d5b659e02ab4056
-  branch: kfpub
-  specs:
-    dog_biscuits (0.1.0)
-      hyrax
-
-GIT
   remote: https://github.com/samvera/hyrax.git
-  revision: adf413a3ba8b994e42b541dbfa5ccc9cf92df34d
+  revision: 181141da95e7f9efe5d5d7a1b8b38fed6c7c1ff9
   specs:
-    hyrax (2.0.0.beta2)
+    hyrax (2.0.0.alpha)
       active-fedora (>= 11.3.1)
       active_fedora-noid (~> 2.0, >= 2.0.2)
       almond-rails (~> 0.1)
@@ -114,7 +106,7 @@ GEM
       activemodel (= 5.1.3)
       activesupport (= 5.1.3)
       arel (~> 8.0)
-    activerecord-import (0.20.0)
+    activerecord-import (0.19.1)
       activerecord (>= 3.2)
     activesupport (5.1.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -173,7 +165,7 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     breadcrumbs_on_rails (3.0.1)
-    browse-everything (0.14.1)
+    browse-everything (0.14.0)
       addressable (~> 2.5)
       aws-sdk
       bootstrap-sass
@@ -230,7 +222,7 @@ GEM
       safe_yaml (~> 1.0.0)
     daemons (1.2.4)
     database_cleaner (1.6.1)
-    declarative (0.0.10)
+    declarative (0.0.9)
     declarative-option (0.1.0)
     deep_merge (1.1.1)
     deprecation (1.0.0)
@@ -256,7 +248,7 @@ GEM
     dry-container (0.6.0)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1, >= 0.1.3)
-    dry-core (0.3.3)
+    dry-core (0.3.1)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.2.0)
     dry-logic (0.4.1)
@@ -337,7 +329,7 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
-    haml (5.0.3)
+    haml (5.0.2)
       temple (>= 0.8.0)
       tilt
     hamster (3.0.0)
@@ -386,7 +378,7 @@ GEM
       hydra-access-controls (= 10.5.0)
       hydra-core (= 10.5.0)
       rails (>= 3.2.6)
-    hydra-pcdm (0.10.0)
+    hydra-pcdm (0.9.0)
       active-fedora (>= 10, < 12)
       mime-types (>= 1)
     hydra-works (0.16.0)
@@ -437,10 +429,6 @@ GEM
     json-ld (2.1.5)
       multi_json (~> 1.12)
       rdf (~> 2.2)
-    json-ld-preloaded (2.2.2)
-      json-ld (~> 2.1, >= 2.1.5)
-      multi_json (~> 1.11)
-      rdf (~> 2.2)
     json-schema (2.8.0)
       addressable (>= 2.4)
     jwt (1.5.6)
@@ -458,7 +446,7 @@ GEM
     kaminari-core (1.0.1)
     kaminari_route_prefix (0.1.1)
       kaminari (~> 1.0)
-    ld-patch (0.3.2)
+    ld-patch (0.3.1)
       ebnf (~> 1.0, >= 1.0.1)
       rdf (~> 2.0)
       rdf-xsd (~> 2.0)
@@ -477,7 +465,7 @@ GEM
     legato (0.7.0)
       multi_json
     link_header (0.0.8)
-    linkeddata (2.2.3)
+    linkeddata (2.2.2)
       equivalent-xml (~> 0.6)
       json-ld (~> 2.1)
       ld-patch (~> 0.3)
@@ -498,7 +486,6 @@ GEM
       rdf-turtle (~> 2.2)
       rdf-vocab (~> 2.1)
       rdf-xsd (~> 2.1)
-      shex (~> 0.5)
       sparql (~> 2.1)
       sparql-client (~> 2.1)
     listen (3.1.5)
@@ -774,14 +761,6 @@ GEM
       useragent
     select2-rails (3.5.10)
       thor (~> 0.14)
-    shex (0.5.1)
-      ebnf (~> 1.1)
-      json-ld (~> 2.1)
-      json-ld-preloaded (~> 2.1)
-      rdf (~> 2.2)
-      rdf-xsd (~> 2.2)
-      sparql (~> 2.2)
-      sxp (~> 1.0)
     sidekiq (5.0.3)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
@@ -856,7 +835,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.8)
     tins (1.14.0)
-    tinymce-rails (4.6.6)
+    tinymce-rails (4.6.5)
       railties (>= 3.1.1)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
@@ -912,7 +891,6 @@ DEPENDENCIES
   devise-guests (~> 0.3)
   devise-i18n
   devise_invitable (~> 1.6)
-  dog_biscuits!
   factory_girl_rails
   fcrepo_wrapper (~> 0.4)
   flipflop (~> 2.3)
@@ -954,7 +932,6 @@ DEPENDENCIES
   solr_wrapper (~> 1.0)
   spring (~> 1.7)
   spring-watcher-listen (~> 2.0.0)
-  term-ansicolor
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)

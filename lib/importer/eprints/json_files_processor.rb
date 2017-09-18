@@ -18,8 +18,8 @@ module Importer
             update_visibility(fileset, @files_hash[fileset.label][:visibility])
           end
           # KFSPECIFIC - ensure indexcodes.txt is added to PDF not TXT
-          next if @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files].blank?
-          # next if fileset.label.ends_with?('.txt') # KFSEPECIFIC - this will error, so don't do it
+          next if @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files].blank? # add indexcodes to PDF
+          next if fileset.label.ends_with?('.txt') # KFSEPECIFIC - adding indexcode to txt file will error, so don't do it
           update_with_other_files(
             fileset,
             @files_hash[fileset.label.gsub('.pdf', '.txt')][:additional_files]
@@ -54,8 +54,6 @@ module Importer
         # @param [Hash] the filenames of the files to use for the update
         def update_with_other_files(fileset, additional_files)
           additional_files.each do |file_to_add|
-            puts file_to_add
-            puts fileset.title[0]
             file = download_remote_file(file_to_add[:url], file_to_add[:file_name])
             ingest_file(fileset, file.path, file_to_add[:type])
           end
@@ -84,7 +82,7 @@ module Importer
           fileset.save!
 
         rescue
-          $stderr.puts "\nFailed to add #{path} - see log for details"
+          $stderr.puts "\nFailed to add #{path} to #{fileset.id} - see log for details"
           Rails.logger.error "Failed to add #{path}: #{$ERROR_INFO}"
         end
 

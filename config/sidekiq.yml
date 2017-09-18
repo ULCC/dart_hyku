@@ -2,4 +2,5 @@
 :pidfile: ./tmp/pids/sidekiq.pid
 :logfile: ./log/sidekiq.log
 production:
-  :concurrency: 25
+  :concurrency: 2 # fits was sucking up all the memory
+  :verbose: false

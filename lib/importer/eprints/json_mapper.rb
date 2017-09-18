@@ -53,9 +53,9 @@ module Importer
         # TODO: extend to other date types
         case type
         when 'published'
-          { date_published: val.to_s }
+          { date_published: [val.to_s] }
         else
-          { date: val.to_s }
+          { date: [val.to_s] }
         end
       end
 
@@ -200,8 +200,7 @@ module Importer
         attributes
       end
 
-      # TODO #KFSPECIFIC create KF_ID
-	  # TODO stop using custom id here, knock on elsewhere though
+      # TODO ideally we want an opaque identifier here
       # Add eprintid to attributes
       #
       # @param val [String] the value
@@ -212,7 +211,7 @@ module Importer
         # Pad out the identifier to 9 chars to match noid structure
         identifier.sub!('ep', 'ep0') while identifier.length < 9
         attributes[:former_id] = [val.to_s]
-		# attributes[:biblionumber] = [val.to_s]
+        attributes[:biblionumber] = [val.to_s] # KFSPECIFIC
         attributes[:id] = identifier
         attributes
       end
@@ -235,7 +234,7 @@ module Importer
       # @return [Hash] attributes
       def ispublished(val, attributes)
         # TODO: lookup
-        attributes[:pulication_status] = val
+        attributes[:publication_status] = [val]
         attributes
       end
 
@@ -265,7 +264,7 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def number(val, attributes)
-        attributes[:issue_number] = val.to_s
+        attributes[:issue_number] = [val.to_s]
         attributes
       end
 
@@ -285,7 +284,7 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def pages(val, attributes)
-        attributes[:pagination] = val.to_s
+        attributes[:pagination] = [val.to_s]
         attributes
       end
 
@@ -342,9 +341,9 @@ module Importer
       # @return [Hash] attributes
       def refereed(val, attributes)
         attributes[:refereed] = if val == 'TRUE'
-                                  true
+                                  [true]
                                 else
-                                  false
+                                  [false]
                                 end
         attributes
       end
@@ -360,13 +359,17 @@ module Importer
       end
 
       # TODO lookup?
+      # TODO test this
       # Add subjects to attributes
       #
       # @param val [String] the value
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def subjects(val, attributes)
-        attributes[:subject] = [val.to_s]
+        attributes[:subject] = []
+        val.each do | v |
+          attributes[:subject] << v.to_s
+        end
         attributes
       end
 
@@ -405,7 +408,7 @@ module Importer
       # @param attributes [Hash] hash of attributes to update
       # @return [Hash] attributes
       def volume(val, attributes)
-        attributes[:volume_number] = val.to_s
+        attributes[:volume_number] = [val.to_s]
         attributes
       end
 

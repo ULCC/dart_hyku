@@ -1,2 +1,5 @@
 multitenancy:
   enabled: true
+  default_host:
+active_job:
+  queue_adapter: :sidekiq

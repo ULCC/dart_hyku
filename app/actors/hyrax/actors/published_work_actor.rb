@@ -2,7 +2,7 @@
 #  `rails generate hyrax:work PublishedWork`
 module Hyrax
   module Actors
-    class PublishedWorkActor < SharedActor
+    class PublishedWorkActor < Hyrax::Actors::BaseActor
 
 
 

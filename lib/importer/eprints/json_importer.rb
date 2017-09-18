@@ -18,8 +18,13 @@ module Importer
             @model = attributes[:model]
             attributes.delete(:model)
             attributes[:edit_groups] = ['admin']
+            # DISABLE ADDING FILES BY UNCOMMENTING THIS LINE
+            # attributes.delete(:remote_files)
+            # END
             create_fedora_objects(attributes)
+            # DISABLE ADDING FILES BY COMMENTING OUT THIS LINE
             ids << { attributes[:id] => attributes.delete(:files_hash) }
+            # END
             count += 1
           end
           # Update filesets with extracted_text

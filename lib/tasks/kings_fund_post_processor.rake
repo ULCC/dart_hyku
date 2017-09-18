@@ -3,7 +3,7 @@ namespace :kings_fund do
 
   MODELS = ['ConferenceItem','PublishedWork']
 
-  COLLECTION_NO_IMAGES = 'b81cd60c-5726-4309-925e-b8d32f4fe79e'
+  METADATA_ONLY = 'b81cd60c-5726-4309-925e-b8d32f4fe79e'
   COLLECTION_WITH_IMAGES = '190de7b8-86d4-41be-ad8f-6fd7e51231e3'
 
   task post_process: :environment do
@@ -18,8 +18,8 @@ namespace :kings_fund do
         puts "Processing #{work.id}: #{work.title[0]} (#{members_count} members)"
         update_tail(work, members_count) if members_count > 2
         update_representative_and_thumbnail(work) if members_count > 2
-        add_to_collection(work.id, COLLECTION_NO_IMAGES) if members_count > 2
-        add_to_collection(work.id, COLLECTION_WITH_IMAGES) if members_count <= 2
+        add_to_collection(work.id, COLLECTION_WITH_IMAGES) if members_count > 2
+        add_to_collection(work.id, METADATA_ONLY) if members_count <= 2
         work.save
         count = count +1
       end

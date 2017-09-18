@@ -2,7 +2,7 @@
 #  `rails generate hyrax:work ConferenceItem`
 module Hyrax
   module Actors
-    class ConferenceItemActor < SharedActor
+    class ConferenceItemActor < Hyrax::Actors::BaseActor
 
     end
   end

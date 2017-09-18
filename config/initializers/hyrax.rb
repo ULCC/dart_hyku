@@ -107,7 +107,8 @@ Hyrax.config do |config|
      if Settings.s3.upload_bucket
        "uploads/#{Apartment::Tenant.current}"
      else
-       Rails.root + 'tmp' + 'uploads' + Apartment::Tenant.current
+       File.join('/opt/hyku_data', Apartment::Tenant.current)
+       # Rails.root + 'tmp' + 'uploads' + Apartment::Tenant.current
      end
    end
   end
@@ -115,6 +116,7 @@ Hyrax.config do |config|
   # Location on local file system where derivatives will be stored.
   # If you use a multi-server architecture, this MUST be a shared volume.
   # config.derivatives_path = File.join(Rails.root, 'tmp', 'derivatives')
+  config.derivatives_path = File.join('/opt/hyku_data', 'derivatives')
 
   # Should schema.org microdata be displayed?
   # config.display_microdata = true
@@ -123,10 +125,12 @@ Hyrax.config do |config|
   # type can not be found in the locale file?
   # config.microdata_default_type = 'http://schema.org/CreativeWork'
 
+  # JA - seems to duplicate the above - you end up with files in both locations!
   # Location on local file system where uploaded files will be staged
   # prior to being ingested into the repository or having derivatives generated.
   # If you use a multi-server architecture, this MUST be a shared volume.
   # config.working_path = File.join(Rails.root, 'tmp', 'uploads')
+  config.working_path = File.join('/opt/hyku_data', 'uploads')
 
   # Specify whether the media display partial should render a download link
   # config.display_media_download_link = true

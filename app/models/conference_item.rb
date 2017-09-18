@@ -10,6 +10,10 @@ class ConferenceItem < ::DogBiscuits::ConferenceItem
 
   self.human_readable_type = 'Conference Item'
 
+  property :biblionumber, predicate: ::RDF::URI.new('http://london.ac.uk/ontologies/kingsfund#biblionumber') do |index|
+    index.as :stored_searchable
+  end
+
   # This must be included at the end, because it finalizes the metadata
   # schema (by adding accepts_nested_attributes)
   # include ::Hyrax::BasicMetadata
