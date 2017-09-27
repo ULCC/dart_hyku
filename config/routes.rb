@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  # require 'sidekiq/web'
-  # mount Sidekiq::Web => '/sidekiq'
-
   if Settings.multitenancy.enabled
     constraints host: Account.admin_host do
       get '/account/sign_up' => 'account_sign_up#new', as: 'new_sign_up'
@@ -28,8 +25,7 @@ Rails.application.routes.draw do
 
   root 'hyrax/homepage#index'
 
-  devise_for :users, controllers: { registrations: 'hyku/registrations', invitations: 'invitations' }
-
+  devise_for :users, controllers: { invitations: 'hyku/invitations', registrations: 'hyku/registrations' }
   mount Qa::Engine => '/authorities'
 
   mount Blacklight::Engine => '/'
@@ -62,6 +58,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resource :account, only: [:edit, :update]
+    resources :users, only: [:destroy]
     resources :groups do
       member do
         get :remove
@@ -78,5 +75,4 @@ Rails.application.routes.draw do
 
   mount Peek::Railtie => '/peek'
   mount Riiif::Engine => '/images', as: 'riiif'
-
 end
