@@ -2,6 +2,7 @@
 #  `rails generate hyrax:work PublishedWork`
 class PublishedWork < ::DogBiscuits::PublishedWork
   include ::Hyrax::WorkBehavior
+  include HasRendering
 
   self.indexer = PublishedWorkIndexer
   # Change this to restrict which works can be added as a child.

@@ -3,7 +3,11 @@
 module Hyrax
   class PublishedWorkForm < Hyrax::Forms::WorkForm
     self.model_class = ::PublishedWork
-    self.terms += [:resource_type]
+    self.terms += [:resource_type, :rendering_ids]
+
+    def secondary_terms
+      super - [:rendering_ids]
+    end
 
     # remove things with
     self.terms -= [:based_near, :date_created, :source, :description]

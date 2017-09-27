@@ -106,14 +106,14 @@ gem 'zk'
 gem 'mods', '~> 2.1'
 gem 'riiif', '~> 1.1'
 
-gem 'iiif_manifest', '~> 0.2.0'
+gem 'iiif_manifest', git: 'https://github.com/samvera-labs/iiif_manifest.git', branch: 'add_metadata' # , '~> 0.2.0'
 
 group :aws, :test do
   gem 'carrierwave-aws'
 end
 
 group :aws do
-  gem 'active_elastic_job', '~> 2.0'
+  gem 'active_elastic_job' #, '~> 2.0'
 end
 
 gem 'peek-sidekiq'
