@@ -65,7 +65,7 @@ module Hyku
       end
 
       # Retrieve the required fields from the Form class. Derive the Form class name from the Model name.
-      #   The class should exist, but it may not if different amespaces are being used.
+      #   The class should exist, but it may not if different namespaces are being used.
       #   If it does not exist, rescue and return an empty Array.
       #
       # @return [Array] required fields
@@ -78,15 +78,11 @@ module Hyku
         []
       end
 
-      # Get the metadata value; return a String for single values and an Array of hashes for multiple values.
+      # Get the metadata value(s).
       #
-      # @return [String or Array] field value(s)
+      # @return [Array] field value(s)
       def get_metadata_value(field)
-        if send(field).count == 1
-          send(field).first
-        else
-          send(field).collect { |f| f }
-        end
+        Array.wrap(send(field))
       end
   end
 end
