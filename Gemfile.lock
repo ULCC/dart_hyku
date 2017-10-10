@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/geekscruff/dog_biscuits.git
+  revision: 1fba2ca77ee81a0218e7f5094a0f09a1a7fa016b
+  ref: 1fba2ca77ee81a0218e7f5094a0f09a1a7fa016b
+  branch: kfpub
+  specs:
+    dog_biscuits (0.1.0)
+      hyrax
+
+GIT
   remote: https://github.com/samvera/hyrax.git
   revision: 2e0f7ec5d65e3630f2828b087405296145d440cb
   specs:
@@ -893,7 +902,7 @@ PLATFORMS
 
 DEPENDENCIES
   active-fedora (>= 11.1.4)
-  active_elastic_job (~> 2.0)
+  active_elastic_job
   apartment
   blacklight (~> 6.7)
   byebug
@@ -907,6 +916,7 @@ DEPENDENCIES
   devise-guests (~> 0.3)
   devise-i18n
   devise_invitable (~> 1.6)
+  dog_biscuits!
   factory_girl_rails
   fcrepo_wrapper (~> 0.4)
   flipflop (~> 2.3)
@@ -948,6 +958,7 @@ DEPENDENCIES
   solr_wrapper (~> 1.0)
   spring (~> 1.7)
   spring-watcher-listen (~> 2.0.0)
+  term-ansicolor
   turbolinks (~> 5)
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
