@@ -1,8 +1,14 @@
 en:
   hyrax:
     icons:
-      conference_item:     'fa fa-file-text-o'
+      published_work:     'fa fa-file-text-o'
     select_type:
-      conference_item:
-        name:               "Conference Item"
-        description:        "Conference item works"
+      published_work:
+        name:               "Published Work"
+        description:        "Published work works"
+  simple_form:
+    hints:
+    defaults:
+      isbn: "The International Standard Book Number for the work."
+    labels:
+      extent: "ISBN"

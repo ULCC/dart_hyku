@@ -4,7 +4,7 @@ class PublishedWork < ::DogBiscuits::PublishedWork
   include ::Hyrax::WorkBehavior
   include HasRendering
 
-  self.indexer = PublishedWorkIndexer
+  # self.indexer = PublishedWorkIndexer
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []
   validates :title, presence: { message: 'Your work must have a title.' }

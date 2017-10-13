@@ -1,5 +1,6 @@
 multitenancy:
   enabled: true
-  default_host:
+  default_host: ENV['HOST']
+  admin_host: ENV['HOST']
 active_job:
   queue_adapter: :sidekiq

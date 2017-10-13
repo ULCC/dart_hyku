@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
-# Inserted
-gem 'dog_biscuits', :git => 'https://github.com/geekscruff/dog_biscuits.git', :branch => 'kfpub'
+# Inserted DB pinned to commit whilst in dev
+# gem 'dog_biscuits', :git => 'https://github.com/geekscruff/dog_biscuits.git', :branch => 'kfpub' #, :ref => '1fba2ca77ee81a0218e7f5094a0f09a1a7fa016b'
+gem 'dog_biscuits', :path => "/opt/dog_biscuits"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
@@ -107,7 +108,7 @@ gem 'mods', '~> 2.1'
 gem 'riiif', '~> 1.1'
 
 gem 'iiif_manifest', '~> 0.3.0'
-  
+
 group :aws, :test do
   gem 'carrierwave-aws'
 end
