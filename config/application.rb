@@ -13,6 +13,13 @@ module Hyku
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # Relocate RAILS_TMP
+    config.assets.configure do |env|
+      env.cache = Sprockets::Cache::FileStore.new(
+          ENV['RAILS_TMP'] + '/cache/assets'
+      )
+    end
+
     # Gzip all responses.  We probably could do this in an upstream proxy, but
     # configuring Nginx on Elastic Beanstalk is a pain.
     config.middleware.use Rack::Deflater
