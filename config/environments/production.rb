@@ -1,6 +1,13 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Relocate RAILS_TMP
+  config.assets.configure do |env|
+    env.cache = Sprockets::Cache::FileStore.new(
+        ENV['RAILS_TMP'] + '/cache/assets'
+    )
+  end
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
