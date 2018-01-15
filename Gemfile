@@ -102,7 +102,8 @@ gem 'zk'
 gem 'mods', '~> 2.1'
 gem 'riiif', '~> 1.1'
 
-gem 'iiif_manifest', '~> 0.3.0'
+# gem 'iiif_manifest', '~> 0.3.0'
+gem 'iiif_manifest', :git => 'git://github.com/ULCC/iiif_manifest', :branch => 'search_endpoint'
 
 group :aws, :test do
   gem 'carrierwave-aws'

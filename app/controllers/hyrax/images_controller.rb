@@ -15,5 +15,8 @@ module Hyrax
     # Instead we include IIIFManifest which uses the manifest-enabled show
     # presenter
     include Hyku::IIIFManifest
+    
+    # IIIFSearch also uses the manifest-enabled show presenter
+    include Hyku::IIIFSearch
   end
 end

@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   curation_concerns_basic_routes do
     member do
       get :manifest
+      get :search
     end
   end
 

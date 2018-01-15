@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/ULCC/iiif_manifest
+  revision: 10df9c4b14cbd26c789fbfe43553d901165014c3
+  branch: search_endpoint
+  specs:
+    iiif_manifest (0.3.0)
+      activesupport (>= 4)
+      iiif-presentation (~> 0.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -402,9 +411,6 @@ GEM
       activesupport (>= 3.2.18)
       faraday (>= 0.9)
       json
-    iiif_manifest (0.3.0)
-      activesupport (>= 4)
-      iiif-presentation (~> 0.2.0)
     inflecto (0.0.2)
     is_it_working (1.1.0)
     iso-639 (0.2.8)
@@ -911,7 +917,7 @@ DEPENDENCIES
   hyrax (= 2.0.0)
   i18n-debug
   i18n-tasks
-  iiif_manifest (~> 0.3.0)
+  iiif_manifest!
   is_it_working
   jbuilder (~> 2.5)
   jquery-rails

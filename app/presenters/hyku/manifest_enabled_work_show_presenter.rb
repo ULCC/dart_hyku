@@ -35,6 +35,12 @@ module Hyku
       metadata
     end
 
+    # expose a search endpoint
+    # lazy lazy fix me
+    def search_service
+      manifest_url.gsub('manifest', 'search')
+    end
+
     private
 
       def manifest_helper
